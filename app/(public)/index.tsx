@@ -20,13 +20,27 @@ const index = () => {
 
   const handleFacebookLogin = async () => {
     try {
-      const { createSessionId, setActive } = await startOAuthFlow();
+      const { createdSessionId, setActive } = await startOAuthFlow();
+      console.log("handle Facebook", createdSessionId);
+      if (createdSessionId) {
+        setActive!({ session: createdSessionId });
+      }
     } catch (e) {
       console.error(e);
     }
   };
 
-  const handleGoogleLogin = async () => {};
+  const handleGoogleLogin = async () => {
+    try {
+      const { createdSessionId, setActive } = await startOAuthFlow();
+      console.log("handle Google", createdSessionId);
+      if (createdSessionId) {
+        setActive!({ session: createdSessionId });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
   return (
     <View style={styles.container}>
       <Image
@@ -36,7 +50,10 @@ const index = () => {
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.btnContainer}>
           <Text style={styles.title}>How would you like to use Threads?</Text>
-          <TouchableOpacity style={styles.btnLogin}>
+          <TouchableOpacity
+            style={styles.btnLogin}
+            onPress={handleFacebookLogin}
+          >
             <View style={styles.btnLoginContent}>
               <Image
                 source={require("@/assets/images/instagram_icon.webp")}
@@ -56,7 +73,7 @@ const index = () => {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.btnLogin}>
+          <TouchableOpacity style={styles.btnLogin} onPress={handleGoogleLogin}>
             <View style={styles.btnLoginContent}>
               <Text style={styles.btnLoginText}>Continue with Google</Text>
               <Ionicons
