@@ -11,12 +11,17 @@ import React from "react";
 import { useOAuth } from "@clerk/clerk-expo";
 import { Colors } from "@/constants/Color";
 import { Ionicons } from "@expo/vector-icons";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 const index = () => {
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_facebook" });
   const { startOAuthFlow: startGoogleOAuthFlow } = useOAuth({
     strategy: "oauth_google",
   });
+  const data = useQuery(api.users.getAllUsers);
+
+  console.log("data", data);
 
   const handleFacebookLogin = async () => {
     try {
